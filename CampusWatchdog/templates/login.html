@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+
+            background-image: url('/static/background.jpg');
+            color: white;
+            padding: 50px;
+            text-align: center;
+            height: 670px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color:gray;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label, input {
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent bg-transparent fixed-top">
+    <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="60">
+            <span style="font-size: 18px; color: #dcdcdc"> &nbsp;&nbsp;Campus WatchDog</span>
+        </a>
+    <div class = 'navbar-collapse justify-content-end'>
+        {% if current_user.is_authenticated %}
+                <p style="font-size: 14px; color: #dcdcdc;" class="navbar-text">Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="font-size: 15px; color: #dcdcdc">Logout</a></p>
+            {% else %}
+                <a class="btn btn-outline-primary justify-content-end" style="color: #dcdcdc" href="{{ url_for('home') }}">Login</a>
+            {% endif %}
+        </div>
+
+</nav>
+    <h1>Login</h1>
+    <form action="/" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" class="form-control">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" class="form-control">
+
+        <input type="submit" value="Login" class="btn btn-primary btn-block">
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <p>Not registered yet? Sign up <a href="{{ url_for('register_user') }}">here</a></p>
+
+    <!-- Bootstrap JS and Popper.js scripts (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+
+    <!-- Bootstrap CDN for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+            background-image: url('/static/background.jpg');
+            padding-top: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 70%;
+            max-width: 600px;
+            margin: auto;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input {
+            margin-bottom: 15px;
+        }
+
+        #student_fields {
+            display: none;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent bg-transparent fixed-top">
+    <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="60">
+            <span style="font-size: 18px; color: #dcdcdc"> &nbsp;&nbsp;Campus WatchDog</span>
+        </a>
+    <div class = 'navbar-collapse justify-content-end'>
+        {% if current_user.is_authenticated %}
+                <p style="font-size: 14px; color: #dcdcdc;" class="navbar-text">Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="font-size: 15px; color: #dcdcdc">Logout</a></p>
+            {% else %}
+                <a class="btn btn-outline-primary justify-content-end" style="color: #dcdcdc" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
+
+</nav>
+    <h2>Create User</h2>
+
+    <form action="/create_user" method="POST">
+
+        <div class="form-group">
+            <label for="user_type">User Type:</label>
+            <select class="form-control" name="user_type" id="user_type">
+                <option value="admin">Admin</option>
+                <option value="student">Student</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <input type="text" class="form-control" id="role" name="role" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
+        </div>
+
+        <!-- Additional fields for student -->
+        <div id="student_fields">
+            <div class="form-group">
+                <label for="studentCId">Student ID:</label>
+                <input type="text" class="form-control" id="studentCId" name="studentCId">
+            </div>
+
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <input type="text" class="form-control" id="course" name="course">
+            </div>
+
+            <div class="form-group">
+                <label for="passingYear">Passing Year:</label>
+                <input type="text" class="form-control" id="passingYear" name="passingYear">
+            </div>
+
+            <div class="form-group">
+                <label for="branch">Branch:</label>
+                <input type="text" class="form-control" id="branch" name="branch">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create User</button>
+    </form>
+
+    <!-- Bootstrap JS for styling -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // JavaScript to show/hide student fields based on user type selection
+        const userTypeSelect = document.getElementById('user_type');
+        const studentFields = document.getElementById('student_fields');
+
+        userTypeSelect.addEventListener('change', function () {
+            if (userTypeSelect.value === 'student') {
+                studentFields.style.display = 'block';
+            } else {
+                studentFields.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>

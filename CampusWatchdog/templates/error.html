@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent bg-transparent fixed-top">
+    <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="60">
+            <span style="font-size: 18px; color: #dcdcdc"> &nbsp;&nbsp;Campus WatchDog</span>
+        </a>
+    <div class = 'navbar-collapse justify-content-end'>
+        {% if current_user.is_authenticated %}
+                <p style="font-size: 14px; color: #dcdcdc;" class="navbar-text">Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="font-size: 15px; color: #dcdcdc">Logout</a></p>
+            {% else %}
+                <a class="btn btn-outline-primary justify-content-end" style="color: #dcdcdc" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
+
+</nav>
+{{message}}
+</body>
+</html>

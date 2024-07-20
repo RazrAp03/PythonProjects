@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
+    <!-- Link Bootstrap CSS (you may need to adjust the path based on your project structure) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 680px;
+            padding-top: 50px;
+            background-image: url('/static/background.jpg');
+        }
+        container
+        {
+            background: #dcdcdc
+        }
+        h1 {
+            color: #007bff; /* Bootstrap primary color */
+        }
+        h2
+        {
+          color: #dcdcdc
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6; /* Bootstrap table border color */
+            padding: 12px;
+            text-align: left;
+            color:#dcdcdc
+        }
+
+
+        th {
+            background-color: #f8f9fa; /* Bootstrap table header background color */
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        @media (max-width: 768px) {
+            /* Adjust styles for smaller screens */
+            h1 {
+                font-size: 24px;
+            }
+
+            table {
+                margin-top: 10px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            button {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .btn-action {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+{% include 'header.html' %}
+
+<body>
+    <div class="container">
+
+<br>
+        <center><h1 class="mt-4">Admin Dashboard</h1></center>
+        <center><h2 class="mt-4">List of Tickets</h2></center>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Created By</th>
+                        <th>Created At</th>
+
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td><a href="/ticket/{{ ticket.id }}">{{ ticket.title }}</a></td>
+                        <td>{{ ticket.status }}</td>
+
+                        <td>{{ ticket.created_user.username }}</td>
+                        <td>{{ticket.createdAt}}</td>
+                        <td class="btn-action">
+                            <button class="btn btn-primary"><a href="{{ url_for('edit_ticket', ticket_id=ticket.id) }}" style="color: #fff;">Edit Ticket</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4">
+            <button class="btn btn-success"><a href="{{ url_for('create_user') }}" style="color: #fff;">Create User</a></button>
+            <button class="btn btn-info mt-2"><a href="{{ url_for('all_users') }}" style="color: #fff;">List all Users</a></button>
+        </div>
+    </div>
+
+    <!-- Link Bootstrap JS (optional, only if you need Bootstrap JavaScript features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

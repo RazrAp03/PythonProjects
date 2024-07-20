@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Add additional CSS styles if needed */
+        body {
+
+            background-image: url('/static/background.jpg');
+            color: white;
+            height: 680px;
+            }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            margin-top: 20px;
+            color: white
+        }
+        th, td, a, h1, h2
+        {
+            color:white
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent bg-transparent fixed-top">
+    <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="60">
+            <span style="font-size: 18px; color: #dcdcdc"> &nbsp;&nbsp;Campus WatchDog</span>
+        </a>
+    <div class = 'navbar-collapse justify-content-end'>
+        {% if current_user.is_authenticated %}
+                <p style="font-size: 14px; color: #dcdcdc;" class="navbar-text">Welcome, {{ current_user.username }}! <a href="{{ url_for('logout') }}" style="font-size: 15px; color: #dcdcdc">Logout</a></p>
+            {% else %}
+                <a class="btn btn-outline-primary justify-content-end" style="color: #dcdcdc" href="{{ url_for('home') }}">Login</a>
+            {% endif %}
+        </div>
+
+</nav>
+    <div class="container">
+        <br>
+        <BR>
+        <center><h1>Student Dashboard</h1></center>
+        <br>
+        <h2>Tickets Raised by You</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in student_tickets %}
+                <tr>
+                    <td><a href="/ticket/{{ ticket.id }}">{{ ticket.id }}</a></td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>
+                        <form action="/delete_ticket/{{ ticket.id }}" method="POST">
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Button to create a new ticket -->
+        <form action="/create_ticket" method="GET">
+            <input type="submit" class="btn btn-primary" value="Create Ticket">
+        </form>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts if needed -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
